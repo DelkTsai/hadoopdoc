@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.2" data-basepath="." data-revision="1409128198085">
+    <div class="book"  data-level="1.2" data-basepath="." data-revision="1409195746316">
     
 
 <div class="book-summary">
@@ -1231,10 +1231,149 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_3">
+                    <section class="normal" id="section-gitbook_588">
                     
-                        <h1 id="12-">1.2 单击模式安装</h1>
-<p>未完成</p>
+                        <h1 id="12-">1.2 单机模式安装</h1>
+<p><strong>MapReduce安装包：</strong></p>
+<ul>
+<li>你需要先从release版本中获得MapReduce的二进制包，如果没有你可以通过如下方式创建：<pre><code>  $ mvn clean install -DskipTests
+  $ cd hadoop-mapreduce-project
+  $ mvn clean install assembly:assembly -Pnative
+</code></pre></li>
+</ul>
+<p><strong>设置环境变量：</strong></p>
+<ul>
+<li>如果你已经安装好了hadoop-common/hadoop-hdfs 并且配置好环境变量： $HADOOP_COMMON_HOME/$HADOOP_HDFS_HOME。解压mapreduce的安装包并且设置环境变量：$HADOOP_MAPRED_HOME ，并且通同样设置YARN环境变量：$HADOOP_YARN_HOME </li>
+<li>注意：下面的介绍假定一已经运行起来hdfs</li>
+</ul>
+<p><strong>配置文件设置：</strong></p>
+<ul>
+<li>启动ResouceManager和NodeManager之前，你需要更改配置文件，假定你已经安装配置好HDFS（core-sitem.xml）,那么你还需要配置两个配置文件mapred-site.xml和yarn-site.xml</li>
+<li><p>配置mapred-site.xml</p>
+<ul>
+<li><p>在mapred-site.xml添加如下内容：</p>
+<pre><code>   &lt;property&gt;
+      &lt;name&gt;mapreduce.cluster.temp.dir&lt;/name&gt;
+      &lt;value&gt;&lt;/value&gt;
+      &lt;description&gt;No description&lt;/description&gt;
+      &lt;final&gt;true&lt;/final&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;mapreduce.cluster.local.dir&lt;/name&gt;
+      &lt;value&gt;&lt;/value&gt;
+      &lt;description&gt;No description&lt;/description&gt;
+      &lt;final&gt;true&lt;/final&gt;
+    &lt;/property&gt;
+</code></pre></li>
+</ul>
+</li>
+<li><p>配置yarn-site.xml</p>
+<ul>
+<li><p>在yarn-site.xml中添加如下内容：</p>
+<pre><code>  &lt;property&gt;
+      &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;
+      &lt;value&gt;host:port&lt;/value&gt;
+      &lt;description&gt;host is the hostname of the resource manager and 
+      port is the port on which the NodeManagers contact the Resource Manager.
+      &lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
+      &lt;value&gt;host:port&lt;/value&gt;
+      &lt;description&gt;host is the hostname of the resourcemanager and port is the port
+      on which the Applications in the cluster talk to the Resource Manager.
+      &lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.resourcemanager.scheduler.class&lt;/name&gt;
+      &lt;value&gt;org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler&lt;/value&gt;
+      &lt;description&gt;In case you do not want to use the default scheduler&lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+      &lt;value&gt;host:port&lt;/value&gt;
+      &lt;description&gt;the host is the hostname of the ResourceManager and the port is the port on
+      which the clients can talk to the Resource Manager. &lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.nodemanager.local-dirs&lt;/name&gt;
+      &lt;value&gt;&lt;/value&gt;
+      &lt;description&gt;the local directories used by the nodemanager&lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.nodemanager.address&lt;/name&gt;
+      &lt;value&gt;0.0.0.0:port&lt;/value&gt;
+      &lt;description&gt;the nodemanagers bind to this port&lt;/description&gt;
+    &lt;/property&gt;  
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.nodemanager.resource.memory-mb&lt;/name&gt;
+      &lt;value&gt;10240&lt;/value&gt;
+      &lt;description&gt;the amount of memory on the NodeManager in GB&lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.nodemanager.remote-app-log-dir&lt;/name&gt;
+      &lt;value&gt;/app-logs&lt;/value&gt;
+      &lt;description&gt;directory on hdfs where the application logs are moved to &lt;/description&gt;
+    &lt;/property&gt;
+
+     &lt;property&gt;
+      &lt;name&gt;yarn.nodemanager.log-dirs&lt;/name&gt;
+      &lt;value&gt;&lt;/value&gt;
+      &lt;description&gt;the directories used by Nodemanagers as log directories&lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+      &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+      &lt;description&gt;shuffle service that needs to be set for Map Reduce to run &lt;/description&gt;
+    &lt;/property&gt;
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p><strong>设置capacity-scheduler.xml：</strong></p>
+<ul>
+<li><p>确保下面内容添加到配置文件的跟节点下：</p>
+<pre><code>   &lt;property&gt;
+      &lt;name&gt;yarn.scheduler.capacity.root.queues&lt;/name&gt;
+      &lt;value&gt;unfunded,default&lt;/value&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.scheduler.capacity.root.capacity&lt;/name&gt;
+      &lt;value&gt;100&lt;/value&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.scheduler.capacity.root.unfunded.capacity&lt;/name&gt;
+      &lt;value&gt;50&lt;/value&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+      &lt;name&gt;yarn.scheduler.capacity.root.default.capacity&lt;/name&gt;
+      &lt;value&gt;50&lt;/value&gt;
+    &lt;/property&gt;
+</code></pre></li>
+</ul>
+<p><strong>启动程序</strong></p>
+<ul>
+<li>确保以下环境变量都配置好：<strong> $HADOOP_COMMON_HOME, $HADOOP_HDFS_HOME, $HADOO_MAPRED_HOME, $HADOOP_YARN_HOME, $JAVA_HOME ,$HADOOP_CONF_DIR</strong>正确设置,<strong>$YARN_CONF_DIR</strong>和<strong>$HADOOP_CONF_DIR</strong>都正确配置</li>
+<li>使用下面命令运行ResouceManager和NodeManager：<pre><code>  $ cd $HADOOP_MAPRED_HOME
+  $ sbin/yarn-daemon.sh start resourcemanager
+  $ sbin/yarn-daemon.sh start nodemanager
+</code></pre></li>
+<li>运行测试例子<pre><code>  $ $HADOOP_COMMON_HOME/bin/hadoop jar hadoop-examples.jar randomwriter out
+</code></pre></li>
+</ul>
+<p><strong>Good luck</strong></p>
 <p><img src="images/hadoop-logo.jpg?raw=true" alt=""></p>
 <h2 id="links">links</h2>
 <ul>
