@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath="." data-revision="1409128198085">
+    <div class="book"  data-level="2.1" data-basepath="." data-revision="1409298027428">
     
 
 <div class="book-summary">
@@ -1231,10 +1231,46 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_1">
+                    <section class="normal" id="section-gitbook_16">
                     
-                        <h1 id="21-cli-">2.1 CLI 微型集群</h1>
-<p>未完成</p>
+                        <h1 id="21-hadoop-mapreduce---cli-">2.1 Hadoop MapReduce的下一代 --&gt;CLI 微型集群</h1>
+<p><strong>目的</strong></p>
+<ul>
+<li>用CLI微型集群用户可以很简单的用一个命令来启动和停止hadoop的集群,不用去配置环境变量或者管理配置文件.CLI微型集群启动的时候同时启动YARN/MapReduce和HDFS集群</li>
+<li>对用户希望很快的试用hadoop集群或者依赖hadoop函数测试一个非java进程是非常有用的</li>
+</ul>
+<p><strong>Hadoop源码</strong></p>
+<ul>
+<li>你应该能够从发布内容来获得hadoop的源码.你也可以直接创建一个包来引用源码<pre><code>  $ mvn clean install -DskipTests
+  $ mvn package -Pdist -Dtar -DskipTests -Dmaven.javadoc.skip
+</code></pre></li>
+<li>注意你必须要安装hadoop2.5.0</li>
+<li>源码应该是在 hadoop-dist/target/目录下</li>
+</ul>
+<p><strong>启动微型集群</strong></p>
+<ul>
+<li>用下面的命令可以从根目录启动CLI微型集群<pre><code>  $ bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.2.0-tests.jar minicluster -rmport RM_PORT -jhsport JHS_PORT
+</code></pre></li>
+<li>在上面的演示命令中RM_PORT 和 JHS_PORT 应该被用户已经选择的端口号所取代,如果没有指定端口号,随机的端口号将被利用.</li>
+<li><p>用户可以用这些命令参数去控制启动那个服务,并且解析配置文件,下面是一些有效的参数</p>
+<pre><code>  $ -D &lt;property=value&gt;    Options to pass into configuration object
+  $ -datanodes &lt;arg&gt;       How many datanodes to start (default 1)
+  $ -format                Format the DFS (default false)
+  $ -help                  Prints option help.
+  $ -jhsport &lt;arg&gt;         JobHistoryServer port (default 0--we choose)
+  $ -namenode &lt;arg&gt;        URL of the namenode (default is either the DFS
+  $                        cluster or a temporary dir)
+  $ -nnport &lt;arg&gt;          NameNode port (default 0--we choose)
+  $ -nodemanagers &lt;arg&gt;    How many nodemanagers to start (default 1)
+  $ -nodfs                 Don&#39;t start a mini DFS cluster
+  $ -nomr                  Don&#39;t start a mini MR cluster
+  $ -rmport &lt;arg&gt;          ResourceManager port (default 0--we choose)
+  $ -writeConfig &lt;path&gt;    Save configuration to this XML file.
+  $ -writeDetails &lt;path&gt;   Write basic information to this JSON file.
+</code></pre></li>
+<li><p>需要显示全这些参数的详细解释,用户应该通过-path参数加到上面的命令上</p>
+</li>
+</ul>
 <p><img src="images/hadoop-logo.jpg?raw=true" alt=""></p>
 <h2 id="links">links</h2>
 <ul>
