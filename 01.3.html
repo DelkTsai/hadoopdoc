@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.3" data-basepath="." data-revision="1409220086483">
+    <div class="book"  data-level="1.3" data-basepath="." data-revision="1409558426462">
     
 
 <div class="book-summary">
@@ -1231,19 +1231,54 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_423">
+                    <section class="normal" id="section-gitbook_1245">
                     
                         <h1 id="12-">1.2 集群安装</h1>
-<p><strong>本节目标</strong></p>
-<p>*本文描述了如何安装、配置和管理有实际意义的Hadoop集群，其规模可从几个节点的小集群到几千个节点的超大集群。如果你希望在单机上安装Hadoop玩玩，可以参考<a href="01.1.html">单击模式</a></p>
-<p><strong>先决条件</strong></p>
-<p>*下载  Hadoop安装包</p>
-<p><strong>安装</strong></p>
+<tt>翻译中...</tt>
+
+<ul>
+<li><a href="#Purpose">本节目标</a></li>
+<li><a href="#Prerequisites">先决条件</a></li>
+<li><a href="#Installation">安装</a></li>
+<li><a href="#Running_Hadoop_in_Non-Secure_Mode">在非安全模式运行Hadoop</a><ul>
+<li><a href="#Configuring_Environment_of_Hadoop_Daemons">配置Hadoop守护进程</a></li>
+<li><a href="#Configuring_the_Hadoop_Daemons_in_Non-Secure_Mode">使用非安全模式配置Hadoop守护进程</a></li>
+</ul>
+</li>
+<li><a href="#Hadoop_Rack_Awareness">Hadoop机架感知</a></li>
+<li><a href="#Monitoring_Health_of_NodeManagers">监控NodeManager状态</a></li>
+<li><a href="#Slaves_file">Slaves文件</a></li>
+<li><a href="#Logging">日志</a></li>
+<li><a href="#Operating_the_Hadoop_Cluster">操作Hadoop集群</a><ul>
+<li><a href="#Hadoop_Startup">启动Hadoop</a></li>
+<li><a href="#Hadoop_Shutdown">关闭Hadoop</a></li>
+</ul>
+</li>
+<li><a href="#Running_Hadoop_in_Secure_Mode">使用安全模式运行Hadoop</a><ul>
+<li><a href="#Configuration_in_Secure_Mode">在安全模式下配置</a></li>
+</ul>
+</li>
+<li><a href="#Operating_the_Hadoop_Cluster2">操作Hadoop集群</a><ul>
+<li><a href="#Hadoop_Startup2">启动Hadoop</a></li>
+<li><a href="#Hadoop_Shutdown2">关闭Hadoop</a></li>
+</ul>
+</li>
+<li><a href="#Web_Interfaces">Web接口</a></li>
+</ul>
+<p><strong><a name="Purpose">本节目标</a></strong></p>
+<ul>
+<li>本文描述了如何安装、配置和管理有实际意义的Hadoop集群，其规模可从几个节点的小集群到几千个节点的超大集群。如果你希望在单机上安装Hadoop玩玩，可以参考<a href="01.1.html">单击模式</a></li>
+</ul>
+<p><strong><a name="Prerequisites">先决条件</a></strong></p>
+<ul>
+<li>下载  Hadoop安装包</li>
+</ul>
+<p><strong><a name="Installation">安装</a></strong></p>
 <ul>
 <li>安装Hadoop集群通常要将安装软件解压到集群内的所有机器上。</li>
 <li>通常一台机器在集群里呗被指定微NameNode,另外一台机器作为ResourceManager，这两太作为Masters，剩下其他的机器在集群中作为Datanode和nodeManger，这些机器是salves。</li>
 </ul>
-<p><strong>在非安全模式下运行Hadoop</strong></p>
+<p><strong><a name="Running_Hadoop_in_Non-Secure_Mode">在非安全模式下运行Hadoop</a></strong></p>
 <ul>
 <li>下面步骤描述如何配置Hadoop集群</li>
 <li>配置文件包括两大类：<ul>
@@ -1253,8 +1288,10 @@
 </li>
 <li>另外，你也可以配置bin目录下的脚本，并且通过更改conf/hadoop-ev.sh和yarn-evn.sh来改变hadoop的一些配置值。</li>
 <li>要配置Hadoop集群，你需要设置Hadoop守护进程的运行环境和Hadoop守护进程的运行参数</li>
-<li>Hadoop守护进程包括Namenode，Datanode，ResourceManager，NodeManager。</li>
-<li><strong>集群配置</strong><ul>
+<li><p>Hadoop守护进程包括Namenode，Datanode，ResourceManager，NodeManager。</p>
+</li>
+<li><p><a href="Configuring_Environment_of_Hadoop_Daemons">配置Hadoop守护进程</a></p>
+<ul>
 <li>管理员可在conf/hadoop-env.sh和 conf/yarn-env.sh脚本内对Hadoop守护进程的运行环境做特别指定。</li>
 <li>你还需要在每个节点上正确设置好JAVA_HOME。</li>
 <li>管理员可以通过配置选项HADOOP_*_OPTS来分别配置各个守护进程。 下表是可以配置的选项。<table>
@@ -1269,7 +1306,8 @@
 </li>
 <li>例如，配置Namenode时,为了使其能够并行回收垃圾（parallelGC）， 要把下面的代码加入到hadoop-env.sh : 
 export HADOOP_NAMENODE_OPTS=&quot;-XX:+UseParallelGC ${HADOOP_NAMENODE_OPTS}&quot; </li>
-<li>其他常用的配置参数还包括：<ul>
+<li><p>其他常用的配置参数还包括：</p>
+<ul>
 <li>HADOOP_LOG_DIR/YARN_LOG.守护进程日志配置目录，如果这个文件不存在，应用程序会自动创建。</li>
 <li>HADOOP_HEAPSIZE/YARN_HEAPSIZE.最大可用的堆大小，单位为MB。比如，1000MB。 这个参数用于设置hadoop守护进程的堆大小。缺省大小是1000MB,配置选项如下：<table>
  <tr><td>守护进程</td><td>配置选项</td></tr>
@@ -1278,9 +1316,313 @@ export HADOOP_NAMENODE_OPTS=&quot;-XX:+UseParallelGC ${HADOOP_NAMENODE_OPTS}&quo
  <tr><td>WebAppProxy</td><td>YARN_PROXYSERVER_HEAPSIZE</td></tr>
  <tr><td>Map Reduce Job History Server</td><td>HADOOP_JOB_HISTORYSERVER_HEAPSIZE</td></tr>
 </table>
+</li>
+</ul>
+</li>
+<li><p><a name="Configuring_the_Hadoop_Daemons_in_Non-Secure_Mode"> 使用非安全模式配置Hadoop守护进程</a></p>
+<ul>
+<li>本小结描述了配置文件一些重要的参数：<ul>
+<li>conf/core-site.xml  <table><tr><td>参数</td><td>值</td><td>备注</td></tr><tr><td>fs.defaultFS</td><td>NameNode URI    </td><td>hdfs://host:port/</td></tr><tr><td>io.file.buffer.size</td><td>131072</td><td>Size of read/write buffer used in SequenceFiles.</td></tr></table></li>
+<li>conf/hdfs-site.xml<ul>
+<li>Namenode配置选项：  <table><td>参数</td><td>值</td><td>备注</td><tr><td>fs.namenode.name.dir</td>    <td>Path on the local filesystem where the NameNode stores the namespace and transactions logs persistently.</td><td>If this is a comma-delimited list of directories then the name table is replicated in all of the directories, for redundancy.</td></tr><tr>
+<td>dfs.namenode.hosts / dfs.namenode.hosts.exclude</td><td>List of permitted/excluded DataNodes.</td><td>If necessary, use these files to control the list of allowable datanodes.</td></tr>
+<tr><td>dfs.blocksize</td><td>268435456</td><td>    HDFS blocksize of 256MB for large file-systems.</td></tr>
+<tr><td>dfs.namenode.handler.count</td><td>100</td><td>    More NameNode server threads to handle RPCs from large number of DataNodes.</td></tr></table></li>
+<li>Datanode配置选项：  <table><td>参数</td><td>值</td><td>备注</td><tr><td>dfs.datanode.data.dir</td>    <td>Comma separated list of paths on the local filesystem of a DataNode where it should store its blocks.</td><td>If this is a comma-delimited list of directories, then data will be stored in all named directories, typically on different devices</td></tr></table></li>
+</ul>
+</li>
+<li>conf/yarn-site.xml<ul>
+<li>ResourceManager和NodeManager配置选项： <table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Parameter</th><th align="left">Value</th><th align="left">Notes</th></tr><tr class="b"><td align="left"><tt>yarn.acl.enable</tt></td><td align="left"><tt>true</tt> / <tt>false</tt></td><td align="left">Enable ACLs? Defaults to <em>false</em>.</td></tr><tr class="a"><td align="left"><tt>yarn.admin.acl</tt></td><td align="left">Admin ACL</td><td align="left">ACL to set admins on the cluster. ACLs are of for <em>comma-separated-users<strong>space</strong>comma-separated-groups</em>. Defaults to special value of <strong>*</strong> which means <em>anyone</em>. Special value of just <em>space</em> means no one has access.</td></tr><tr class="b"><td align="left"><tt>yarn.log-aggregation-enable</tt></td><td align="left"><em>false</em></td><td align="left">Configuration to enable or disable log aggregation</td></tr></tbody></table>
+* ResourceManager配置选项:<table border="1" class="bodyTable"><tr class="a"><th align="left">参数</th><th align="left">值</th><th align="left">备注</th></tr><tr class="b"><td align="left"><tt>yarn.resourcemanager.address</tt></td><td align="left"><tt>ResourceManager</tt> host:port for clients to submit jobs.</td><td align="left"><em>host:port</em></td></tr><tr class="a"><td align="left"><tt>yarn.resourcemanager.scheduler.address</tt></td><td align="left"><tt>ResourceManager</tt> host:port for ApplicationMasters to talk to Scheduler to obtain resources.</td><td align="left"><em>host:port</em></td></tr><tr class="b"><td align="left"><tt>yarn.resourcemanager.resource-tracker.address</tt></td><td align="left"><tt>ResourceManager</tt> host:port for NodeManagers.</td><td align="left"><em>host:port</em></td></tr><tr class="a"><td align="left"><tt>yarn.resourcemanager.admin.address</tt></td><td align="left"><tt>ResourceManager</tt> host:port for administrative commands.</td><td align="left"><em>host:port</em></td></tr><tr class="b"><td align="left"><tt>yarn.resourcemanager.webapp.address</tt></td><td align="left"><tt>ResourceManager</tt> web-ui host:port.</td><td align="left"><em>host:port</em></td></tr><tr class="a"><td align="left"><tt>yarn.resourcemanager.scheduler.class</tt></td><td align="left"><tt>ResourceManager</tt> Scheduler class.</td><td align="left"><tt>CapacityScheduler</tt> (recommended), <tt>FairScheduler</tt> (also recommended), or <tt>FifoScheduler</tt></td></tr><tr class="b"><td align="left"><tt>yarn.scheduler.minimum-allocation-mb</tt></td><td align="left">Minimum limit of memory to allocate to each container request at the <tt>Resource Manager</tt>.</td><td align="left">In MBs</td></tr><tr class="a"><td align="left"><tt>yarn.scheduler.maximum-allocation-mb</tt></td><td align="left">Maximum limit of memory to allocate to each container request at the <tt>Resource Manager</tt>.</td><td align="left">In MBs</td></tr><tr class="b"><td align="left"><tt>yarn.resourcemanager.nodes.include-path</tt> / <tt>yarn.resourcemanager.nodes.exclude-path</tt></td><td align="left">List of permitted/excluded NodeManagers.</td><td align="left">If necessary, use these files to control the list of allowable NodeManagers.</td></tr></table></li>
+</ul>
+</li>
+<li>NodeManager配置选项:<table border="1" class="bodyTable"><tr class="a"><th align="left">参数</th><th align="left">值</th><th align="left">备注</th></tr><tr class="b"><td align="left"><tt>yarn.nodemanager.resource.memory-mb</tt></td><td align="left">Resource i.e. available physical memory, in MB, for given <tt>NodeManager</tt></td><td align="left">Defines total available resources on the <tt>NodeManager</tt> to be made available to running containers</td></tr><tr class="a"><td align="left"><tt>yarn.nodemanager.vmem-pmem-ratio</tt></td><td align="left">Maximum ratio by which virtual memory usage of tasks may exceed physical memory</td><td align="left">The virtual memory usage of each task may exceed its physical memory limit by this ratio. The total amount of virtual memory used by tasks on the NodeManager may exceed its physical memory usage by this ratio.</td></tr><tr class="b"><td align="left"><tt>yarn.nodemanager.local-dirs</tt></td><td align="left">Comma-separated list of paths on the local filesystem where intermediate data is written.</td><td align="left">Multiple paths help spread disk i/o.</td></tr><tr class="a"><td align="left"><tt>yarn.nodemanager.log-dirs</tt></td><td align="left">Comma-separated list of paths on the local filesystem where logs are written.</td><td align="left">Multiple paths help spread disk i/o.</td></tr><tr class="b"><td align="left"><tt>yarn.nodemanager.log.retain-seconds</tt></td><td align="left"><em>10800</em></td><td align="left">Default time (in seconds) to retain log files on the NodeManager Only applicable if log-aggregation is disabled.</td></tr><tr class="a"><td align="left"><tt>yarn.nodemanager.remote-app-log-dir</tt></td><td align="left"><em>/logs</em></td><td align="left">HDFS directory where the application logs are moved on application completion. Need to set appropriate permissions. Only applicable if log-aggregation is enabled.</td></tr><tr class="b"><td align="left"><tt>yarn.nodemanager.remote-app-log-dir-suffix</tt></td><td align="left"><em>logs</em></td><td align="left">Suffix appended to the remote log dir. Logs will be aggregated to ${yarn.nodemanager.remote-app-log-dir}/${user}/${thisParam} Only applicable if log-aggregation is enabled.</td></tr><tr class="a"><td align="left"><tt>yarn.nodemanager.aux-services</tt></td><td align="left">mapreduce_shuffle</td><td align="left">Shuffle service that needs to be set for Map Reduce applications.</td></tr></table></li>
+</ul>
+</li>
+<li>History Server配置选项 (Needs to be moved elsewhere):<table border="1" class="bodyTable"><tr class="a"><th align="left">参数</th><th align="left">值</th><th align="left">备注</th></tr><tr class="b"><td align="left"><tt>yarn.log-aggregation.retain-seconds</tt></td><td align="left"><em>-1</em></td><td align="left">How long to keep aggregation logs before deleting them. -1 disables. Be careful, set this too small and you will spam the name node.</td></tr><tr class="a"><td align="left"><tt>yarn.log-aggregation.retain-check-interval-seconds</tt></td><td align="left"><em>-1</em></td><td align="left">Time between checks for aggregated log retention. If set to 0 or a negative value then the value is computed as one-tenth of the aggregated log retention time. Be careful, set this too small and you will spam the name node.</td></tr></table></li>
+</ul>
+</li>
+<li><tt>conf/mapred-site.xml</tt><ul>
+<li>MapReduce配置选项:<table border="1" class="bodyTable"><tr class="a"><th align="left">参数</th><th align="left">值</th><th align="left">备注</th></tr><tr class="b"><td align="left"><tt>mapreduce.framework.name</tt></td><td align="left">yarn</td><td align="left">Execution framework set to Hadoop YARN.</td></tr><tr class="a"><td align="left"><tt>mapreduce.map.memory.mb</tt></td><td align="left">1536</td><td align="left">Larger resource limit for maps.</td></tr><tr class="b"><td align="left"><tt>mapreduce.map.java.opts</tt></td><td align="left">-Xmx1024M</td><td align="left">Larger heap-size for child jvms of maps.</td></tr><tr class="a"><td align="left"><tt>mapreduce.reduce.memory.mb</tt></td><td align="left">3072</td><td align="left">Larger resource limit for reduces.</td></tr><tr class="b"><td align="left"><tt>mapreduce.reduce.java.opts</tt></td><td align="left">-Xmx2560M</td><td align="left">Larger heap-size for child jvms of reduces.</td></tr><tr class="a"><td align="left"><tt>mapreduce.task.io.sort.mb</tt></td><td align="left">512</td><td align="left">Higher memory-limit while sorting data for efficiency.</td></tr><tr class="b"><td align="left"><tt>mapreduce.task.io.sort.factor</tt></td><td align="left">100</td><td align="left">More streams merged at once while sorting files.</td></tr><tr class="a"><td align="left"><tt>mapreduce.reduce.shuffle.parallelcopies</tt></td><td align="left">50</td><td align="left">Higher number of parallel copies run by reduces to fetch outputs from very large number of maps.</td></tr></table></li>
+<li>MapReduce JobHistory Server配置选项:<table border="1" class="bodyTable"><tr class="a"><th align="left">参数</th><th align="left">值</th><th align="left">备注</th></tr><tr class="b"><td align="left"><tt>mapreduce.jobhistory.address</tt></td><td align="left">MapReduce JobHistory Server <em>host:port</em></td><td align="left">Default port is 10020.</td></tr><tr class="a"><td align="left"><tt>mapreduce.jobhistory.webapp.address</tt></td><td align="left">MapReduce JobHistory Server Web UI <em>host:port</em></td><td align="left">Default port is 19888.</td></tr><tr class="b"><td align="left"><tt>mapreduce.jobhistory.intermediate-done-dir</tt></td><td align="left">/mr-history/tmp</td><td align="left">Directory where history files are written by MapReduce jobs.</td></tr><tr class="a"><td align="left"><tt>mapreduce.jobhistory.done-dir</tt></td><td align="left">/mr-history/done</td><td align="left">Directory where history files are managed by the MR JobHistory Server.</td></tr></table></li>
+</ul>
+</li>
+</ul>
+<p><strong><a name="Hadoop_Rack_Awareness">Hadoop的机架感知</a></strong></p>
+<ul>
+<li>HDFS和YARN具备机架感知策略.</li>
+<li>NameNode和ResourceManager通过调用管理员配置模块中的API resolve来获取集群里每个slave的机架id</li>
+<li>API将dns域名或者ip转换微salves的机架id</li>
+<li>通过配置项<tt>topology.node.switch.mapping.impl</tt>.来制定特定的使用模块，模块的默认实现会调用<tt>topology.script.file.name</tt>配置项指定的一个的脚本/命令. If <tt>topology.script.file.name</tt>  如果<tt》topology.script.file.name</tt>未被设置，对于所有传入的IP地址，模块会返回/default-rack作为机架id.</li>
+</ul>
+<p><strong><a name="Monitoring_Health_of_NodeManagers">NodeManager的健康监控</a></strong></p>
+<ul>
+<li>Hadoop提供了一个机制，管理员可以通过配置NodeManager来运行一些管理员权限的脚本，以便定期的判断node节点是否健康。</li>
+<li>管理员可以通过执行脚本，来判断node节点是处于健康状态，如果脚本发现节点处于不健康状态，会将错误信息输出到控制台。 NodeManager定期检查节点，判断其是否健康，如果脚本输出内容中包含错误的信息，节点状态会被报告为不健康，并且该节点会被加入到ResourceManager的黑名单，并且也不再分配任务该节点。尽管如此，NodeManager会继续运行健康监视脚本，知道该节点重新恢复健康状态。此时，该节点会从黑名单中移除。节点的健康状态和不健康状态都会显示在ResourceManager的web界面中。</li>
+<li>下面的参数用来控制监视node节点状态的脚本<tt>conf/yarn-site.xml</tt><table border="1" class="bodyTable"><tr class="a"><th align="left">参数</th><th align="left">值</th><th align="left">描述</th></tr><tr class="b"><td align="left"><tt>yarn.nodemanager.health-checker.script.path</tt></td><td align="left">节点健康监视脚本</td><td align="left">用来监控节点健康状态的脚本路径.</td></tr><tr class="a"><td align="left"><tt>yarn.nodemanager.health-checker.script.opts</tt></td><td align="left">节点健康状态监视脚本的参数项</td><td align="left">用来监视节点健康状态脚本的参数选项.</td></tr><tr class="b"><td align="left"><tt>yarn.nodemanager.health-checker.script.interval-ms</tt></td><td align="left">脚本运行周期</td><td align="left">Time interval for running health script.</td></tr><tr class="a"><td align="left"><tt>yarn.nodemanager.health-checker.script.timeout-ms</tt></td><td align="left">脚本异常超市时间</td><td align="left">Timeout for health script execution.</td></tr></table>
+
 
 </li>
 </ul>
+<p>健康监视脚本不支持监控磁盘本身的损坏。但是NodeManager具备检查本地磁盘健康与否的能力（准确的说，是检查nodeamanager本地目录和nodemanager日志目录的能力）并且它能检查到的目录数量依赖于<tt>yarn.nodemanager.disk-health-checker.min-healthy-disks</tt>配置项。如果检测到错误，整个节点会被标记为不健康，并且会通知给resource manager。 The boot disk is either raided or a failure in the boot disk is identified by the health checker script.</p>
+<p><strong><a name="laves_file">Slaves file</a></strong></p>
+<ul>
+<li>通常情况下，你会选择一台机器作为集群的NameNode，另外一台机器作为ResoruceManager。剩下的究其都作为DataNode和NodeManager，这些也被称为：<em>slaves</em>
+<tt>conf/slaves</tt>文件配置了所有slaves主机的主机名或者ip地址，每台主机配置一行。</li>
+</ul>
+<p><strong><a name="Logging">日志</a></strong></p>
+<ul>
+<li>Hadoop使用Apachelog4j日志框架作为标准的日志输出。编辑<tt>conf/log4j.properties</tt>文件，可以定制Hadoop实例的日志输出格式等内容。</li>
+</ul>
+<p><strong><a name="Operating_the_Hadoop_Cluster">操作Hadoop集群</a></strong></p>
+<ul>
+<li>如果所有的配置文件都配置完毕，将<tt>HADOOP_CONF_DIR</tt> 目录分发到其他所有机器上。 </li>
+</ul>
+<p><strong><a name="Hadoop_Startup">启动Hadoop</a></strong></p>
+<ul>
+<li><p>启动Hadoop集群，你需要首先启动HDFS和YARN集群。</p>
+</li>
+<li><p>格式化文件系统</p>
+<div><pre>$ $HADOOP_PREFIX/bin/hdfs namenode -format &lt;cluster_name&gt;</pre></div>
+</li>
+<li><p>使用下面命令启动HDFS，在NameNode主机上运行下面命令:</p>
+<div><pre>$ $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start namenode</pre></div>
+
+
+</li>
+</ul>
+<ul>
+<li><p>在slaves节点上运行下面脚本启动DataNode:</p>
+<div><pre>$ $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start datanode</pre></div>
+</li>
+<li><p>在ResourceManager机器上运行下面命令启动YARN:</p>
+<div><pre>$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start resourcemanager</pre></div>
+</li>
+<li><p>在slaves节点上启动NodeManager:</p>
+<div><pre>$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start nodemanager</pre></div>
+</li>
+<li><p>如果有多台服务器是以负载均衡方式运行，则可以通过启动 WebAppProxy server来一一启动它们:</p>
+<div><pre>$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh start proxyserver --config $HADOOP_CONF_DIR</pre></div>
+</li>
+<li><p>在指定的服务器上通过下面命令启动MapReduce JobHistory 服务：</p>
+<div><pre>$ $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR</pre></div>
+
+</li>
+</ul>
+<p><strong><a name="Hadoop_Shutdown">关闭Hadoop</a></strong></p>
+<ul>
+<li><p>在NameNode机器上运行下面命令关闭NameNode</p>
+<div><pre>$ $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop namenode</pre></div>
+</li>
+<li><p>在所有的slaves机器上运行如下命令关闭DataNode:</p>
+<div><pre>$ $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop datanode</pre></div></li>
+<li><p>运行下面命令关闭ResourceManager：</p>
+<div><pre>$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop resourcemanager</pre></div>
+</li>
+<li><p>在所有的slaves机器上运行如下脚本停止NodeManager:</p>
+<div><pre>$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop nodemanager</pre></div>
+</li>
+<li><p>停止负载均衡配置的机器：</p>
+<div><pre>$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh stop proxyserver --config $HADOOP_CONF_DIR</pre></div>
+</li>
+<li><p>在指定的机器上运行下面命令停止MapReduce JobHistory Server：</p>
+<div><pre>$ $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh stop historyserver --config $HADOOP_CONF_DIR</pre></div>
+
+
+</li>
+</ul>
+<p> <strong><a name="Running_Hadoop_in_Secure_Mode">安全模式运行Hadoop</a></strong></p>
+<p>本节描述了一些高级参数，以便在权限控制下更安全的运行Hadoop。</p>
+<ul>
+<li><tt>Hadoop守护进程的账户</tt>
+
+<p>为了保证HDFS和YARN守护进程运行在不同的Unix账户,比如： <tt>hdfs</tt> and <tt>yarn</tt>. 同样保证MapReduce JobHistory服务运行在<tt>mapred</tt>用户下
+比如它们都在统一个Unix用户组<tt>Hadoop</tt>下.
+<table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">用户:组</th><th align="left">守护进程</th></tr><tr class="b"><td align="left">hdfs:hadoop</td><td align="left">NameNode, Secondary NameNode, Checkpoint Node, Backup Node, DataNode</td></tr><tr class="a"><td align="left">yarn:hadoop</td><td align="left">ResourceManager, NodeManager</td></tr><tr class="b"><td align="left">mapred:hadoop</td><td align="left">MapReduce JobHistory Server</td></tr></tbody></table></p>
+<ul>
+<li><tt>Permissions for both HDFS and local fileSystem paths</tt>
+
+</li>
+</ul>
+<p>The following table lists various paths on HDFS and local filesystems (on all nodes) and recommended permissions:
+<table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Filesystem</th><th align="left">Path</th><th align="left">User:Group</th><th align="left">Permissions</th></tr><tr class="b"><td align="left">local</td><td align="left"><tt>dfs.namenode.name.dir</tt></td><td align="left">hdfs:hadoop</td><td align="left">drwx------</td></tr><tr class="a"><td align="left">local</td><td align="left"><tt>dfs.datanode.data.dir</tt></td><td align="left">hdfs:hadoop</td><td align="left">drwx------</td></tr><tr class="b"><td align="left">local</td><td align="left">$HADOOP_LOG_DIR</td><td align="left">hdfs:hadoop</td><td align="left">drwxrwxr-x</td></tr><tr class="a"><td align="left">local</td><td align="left">$YARN_LOG_DIR</td><td align="left">yarn:hadoop</td><td align="left">drwxrwxr-x</td></tr><tr class="b"><td align="left">local</td><td align="left"><tt>yarn.nodemanager.local-dirs</tt></td><td align="left">yarn:hadoop</td><td align="left">drwxr-xr-x</td></tr><tr class="a"><td align="left">local</td><td align="left"><tt>yarn.nodemanager.log-dirs</tt></td><td align="left">yarn:hadoop</td><td align="left">drwxr-xr-x</td></tr><tr class="b"><td align="left">local</td><td align="left">container-executor</td><td align="left">root:hadoop</td><td align="left">--Sr-s---</td></tr><tr class="a"><td align="left">local</td><td align="left"><tt>conf/container-executor.cfg</tt></td><td align="left">root:hadoop</td><td align="left">r--------</td></tr><tr class="b"><td align="left">hdfs</td><td align="left">/</td><td align="left">hdfs:hadoop</td><td align="left">drwxr-xr-x</td></tr><tr class="a"><td align="left">hdfs</td><td align="left">/tmp</td><td align="left">hdfs:hadoop</td><td align="left">drwxrwxrwxt</td></tr><tr class="b"><td align="left">hdfs</td><td align="left">/user</td><td align="left">hdfs:hadoop</td><td align="left">drwxr-xr-x</td></tr><tr class="a"><td align="left">hdfs</td><td align="left"><tt>yarn.nodemanager.remote-app-log-dir</tt></td><td align="left">yarn:hadoop</td><td align="left">drwxrwxrwxt</td></tr><tr class="b"><td align="left">hdfs</td><td align="left"><tt>mapreduce.jobhistory.intermediate-done-dir</tt></td><td align="left">mapred:hadoop</td><td align="left">drwxrwxrwxt</td></tr><tr class="a"><td align="left">hdfs</td><td align="left"><tt>mapreduce.jobhistory.done-dir</tt></td><td align="left">mapred:hadoop</td><td align="left">drwxr-x---</td></tr></tbody></table></p>
+<ul>
+<li><p>Kerberos Keytab files</p>
+<ul>
+<li>HDFS</li>
+</ul>
+<p>The NameNode keytab file, on the NameNode host, should look like the following:</p>
+<div><pre>$ /usr/kerberos/bin/klist -e -k -t /etc/security/keytab/nn.service.keytab
+Keytab name: FILE:/etc/security/keytab/nn.service.keytab
+KVNO Timestamp         Principal
+4 07/18/11 21:08:09 nn/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 nn/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 nn/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)</pre></div>
+
+<p>The Secondary NameNode keytab file, on that host, should look like the following:</p>
+<div><pre>$ /usr/kerberos/bin/klist -e -k -t /etc/security/keytab/sn.service.keytab
+Keytab name: FILE:/etc/security/keytab/sn.service.keytab
+KVNO Timestamp         Principal
+4 07/18/11 21:08:09 sn/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 sn/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 sn/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)</pre></div>
+
+<p>The DataNode keytab file, on each host, should look like the following:</p>
+<div><pre>$ /usr/kerberos/bin/klist -e -k -t /etc/security/keytab/dn.service.keytab
+Keytab name: FILE:/etc/security/keytab/dn.service.keytab
+KVNO Timestamp         Principal
+4 07/18/11 21:08:09 dn/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 dn/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 dn/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)</pre></div></li>
+<li><p>YARN</p>
+<p>The ResourceManager keytab file, on the ResourceManager host, should look like the following:</p>
+<div><pre>$ /usr/kerberos/bin/klist -e -k -t /etc/security/keytab/rm.service.keytab
+Keytab name: FILE:/etc/security/keytab/rm.service.keytab
+KVNO Timestamp         Principal
+4 07/18/11 21:08:09 rm/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 rm/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 rm/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)</pre></div>
+
+<p>The NodeManager keytab file, on each host, should look like the following:</p>
+<div><pre>$ /usr/kerberos/bin/klist -e -k -t /etc/security/keytab/nm.service.keytab
+Keytab name: FILE:/etc/security/keytab/nm.service.keytab
+KVNO Timestamp         Principal
+4 07/18/11 21:08:09 nm/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 nm/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 nm/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)</pre></div></li>
+<li><p>MapReduce JobHistory Server</p>
+<p>The MapReduce JobHistory Server keytab file, on that host, should look like the following:
+<div><pre>$ /usr/kerberos/bin/klist -e -k -t /etc/security/keytab/jhs.service.keytab
+Keytab name: FILE:/etc/security/keytab/jhs.service.keytab
+KVNO Timestamp         Principal
+4 07/18/11 21:08:09 jhs/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 jhs/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 jhs/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-256 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (AES-128 CTS mode with 96-bit SHA-1 HMAC)
+4 07/18/11 21:08:09 host/full.qualified.domain.name@REALM.TLD (ArcFour with HMAC/md5)</pre></div><div class="section"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="a-nameconfiguration_in_secure_modea"><a name="Configuration_in_Secure_Mode">使用安全模式配置</a></h4>
+<ul>
+<li><tt>conf/core-site.xml</tt><table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Parameter</th><th align="left">Value</th><th align="left">Notes</th></tr><tr class="b"><td align="left"><tt>hadoop.security.authentication</tt></td><td align="left"><em>kerberos</em></td><td align="left"><em>simple</em> is non-secure.</td></tr><tr class="a"><td align="left"><tt>hadoop.security.authorization</tt></td><td align="left"><em>true</em></td><td align="left">Enable RPC service-level authorization.</td></tr></tbody></table></li>
+<li><tt>conf/hdfs-site.xml</tt>
+
+<pre><code>*   Configurations for NameNode:&lt;table border=&quot;1&quot; class=&quot;bodyTable&quot;&gt;&lt;tbody&gt;&lt;tr class=&quot;a&quot;&gt;&lt;th align=&quot;left&quot;&gt;Parameter&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Value&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Notes&lt;/th&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;dfs.block.access.token.enable&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_true_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Enable HDFS block access tokens for secure operations.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;a&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;dfs.https.enable&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_true_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;dfs.namenode.https-address&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_nn_host_fqdn:50470_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;a&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;dfs.https.port&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_50470_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;dfs.namenode.keytab.file&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_/etc/security/keytab/nn.service.keytab_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos keytab file for the NameNode.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;a&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;dfs.namenode.kerberos.principal&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;nn/_HOST@REALM.TLD&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos principal name for the NameNode.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;dfs.namenode.kerberos.https.principal&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;host/_HOST@REALM.TLD&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;HTTPS Kerberos principal name for the NameNode.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+</code></pre><ul>
+<li>Configurations for Secondary NameNode:<table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Parameter</th><th align="left">Value</th><th align="left">Notes</th></tr><tr class="b"><td align="left"><tt>dfs.namenode.secondary.http-address</tt></td><td align="left"><em>c_nn_host_fqdn:50090</em></td><td align="left"></td></tr><tr class="a"><td align="left"><tt>dfs.namenode.secondary.https-port</tt></td><td align="left"><em>50470</em></td><td align="left"></td></tr><tr class="b"><td align="left"><tt>dfs.namenode.secondary.keytab.file</tt></td><td align="left"><em>/etc/security/keytab/sn.service.keytab</em></td><td align="left">Kerberos keytab file for the NameNode.</td></tr><tr class="a"><td align="left"><tt>dfs.namenode.secondary.kerberos.principal</tt></td><td align="left">sn/_HOST@REALM.TLD</td><td align="left">Kerberos principal name for the Secondary NameNode.</td></tr><tr class="b"><td align="left"><tt>dfs.namenode.secondary.kerberos.https.principal</tt></td><td align="left">host/_HOST@REALM.TLD</td><td align="left">HTTPS Kerberos principal name for the Secondary NameNode.</td></tr></tbody></table></li>
+<li>Configurations for DataNode:<table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Parameter</th><th align="left">Value</th><th align="left">Notes</th></tr><tr class="b"><td align="left"><tt>dfs.datanode.data.dir.perm</tt></td><td align="left">700</td><td align="left"></td></tr><tr class="a"><td align="left"><tt>dfs.datanode.address</tt></td><td align="left"><em>0.0.0.0:2003</em></td><td align="left"></td></tr><tr class="b"><td align="left"><tt>dfs.datanode.https.address</tt></td><td align="left"><em>0.0.0.0:2005</em></td><td align="left"></td></tr><tr class="a"><td align="left"><tt>dfs.datanode.keytab.file</tt></td><td align="left"><em>/etc/security/keytab/dn.service.keytab</em></td><td align="left">Kerberos keytab file for the DataNode.</td></tr><tr class="b"><td align="left"><tt>dfs.datanode.kerberos.principal</tt></td><td align="left">dn/_HOST@REALM.TLD</td><td align="left">Kerberos principal name for the DataNode.</td></tr><tr class="a"><td align="left"><tt>dfs.datanode.kerberos.https.principal</tt></td><td align="left">host/_HOST@REALM.TLD</td><td align="left">HTTPS Kerberos principal name for the DataNode.</td></tr></tbody></table></li>
+</ul>
+</li>
+<li><tt>conf/yarn-site.xml</tt>
+
+<pre><code>*   WebAppProxy
+
+The &lt;tt&gt;WebAppProxy&lt;/tt&gt; provides a proxy between the web applications exported by an application and an end user. If security is enabled it will warn users before accessing a potentially unsafe web application. Authentication and authorization using the proxy is handled just like any other privileged web application.
+</code></pre><table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Parameter</th><th align="left">Value</th><th align="left">Notes</th></tr><tr class="b"><td align="left"><tt>yarn.web-proxy.address</tt></td><td align="left"><tt>WebAppProxy</tt> host:port for proxy to AM web apps.</td><td align="left"><em>host:port</em> if this is the same as <tt>yarn.resourcemanager.webapp.address</tt> or it is not defined then the <tt>ResourceManager</tt> will run the proxy otherwise a standalone proxy server will need to be launched.</td></tr><tr class="a"><td align="left"><tt>yarn.web-proxy.keytab</tt></td><td align="left"><em>/etc/security/keytab/web-app.service.keytab</em></td><td align="left">Kerberos keytab file for the WebAppProxy.</td></tr><tr class="b"><td align="left"><tt>yarn.web-proxy.principal</tt></td><td align="left">wap/<em>HOST@REALM.TLD</td><td align="left">Kerberos principal name for the WebAppProxy.</td></tr></tbody></table>
+*   LinuxContainerExecutor
+
+    A <tt>ContainerExecutor</tt> used by YARN framework which define how any _container</em> launched and controlled.
+
+The following are the available in Hadoop YARN:
+<table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">ContainerExecutor</th><th align="left">Description</th></tr><tr class="b"><td align="left"><tt>DefaultContainerExecutor</tt></td><td align="left">The default executor which YARN uses to manage container execution. The container process has the same Unix user as the NodeManager.</td></tr><tr class="a"><td align="left"><tt>LinuxContainerExecutor</tt></td><td align="left">Supported only on GNU/Linux, this executor runs the containers as the user who submitted the application. It requires all user accounts to be created on the cluster nodes where the containers are launched. It uses a <em>setuid</em> executable that is included in the Hadoop distribution. The NodeManager uses this executable to launch and kill containers. The setuid executable switches to the user who has submitted the application and launches or kills the containers. For maximum security, this executor sets up restricted permissions and user/group ownership of local files and directories used by the containers such as the shared objects, jars, intermediate files, log files etc. Particularly note that, because of this, except the application owner and NodeManager, no other user can access any of the local files/directories including those localized as part of the distributed cache.</td></tr></tbody></table>
+
+<pre><code>To build the LinuxContainerExecutor executable run:
+</code></pre><div><pre> $ mvn package -Dcontainer-executor.conf.dir=/etc/hadoop/</pre></div>
+
+<pre><code>The path passed in &lt;tt&gt;-Dcontainer-executor.conf.dir&lt;/tt&gt; should be the path on the cluster nodes where a configuration file for the setuid executable should be located. The executable should be installed in $HADOOP_YARN_HOME/bin.
+</code></pre><p>The executable must have specific permissions: 6050 or --Sr-s--- permissions user-owned by <em>root</em> (super-user) and group-owned by a special group (e.g. <tt>hadoop</tt>) of which the NodeManager Unix user is the group member and no ordinary application user is. If any application user belongs to this special group, security will be compromised. This special group name should be specified for the configuration property <tt>yarn.nodemanager.linux-container-executor.group</tt> in both <tt>conf/yarn-site.xml</tt> and <tt>conf/container-executor.cfg</tt>.</p>
+<p>For example, let&#39;s say that the NodeManager is run as user <em>yarn</em> who is part of the groups users and <em>hadoop</em>, any of them being the primary group. Let also be that <em>users</em> has both <em>yarn</em> and another user (application submitter) <em>alice</em> as its members, and <em>alice</em> does not belong to <em>hadoop</em>. Going by the above description, the setuid/setgid executable should be set 6050 or --Sr-s--- with user-owner as <em>yarn</em> and group-owner as <em>hadoop</em> which has <em>yarn</em> as its member (and not <em>users</em> which has <em>alice</em> also as its member besides <em>yarn</em>).</p>
+<p>The LinuxTaskController requires that paths including and leading up to the directories specified in <tt>yarn.nodemanager.local-dirs</tt> and <tt>yarn.nodemanager.log-dirs</tt> to be set 755 permissions as described above in the table on permissions on directories.</p>
+<pre><code>    *   &lt;tt&gt;conf/container-executor.cfg&lt;/tt&gt;
+
+The executable requires a configuration file called &lt;tt&gt;container-executor.cfg&lt;/tt&gt; to be present in the configuration directory passed to the mvn target mentioned above.
+</code></pre><p>The configuration file must be owned by the user running NodeManager (user <tt>yarn</tt> in the above example), group-owned by anyone and should have the permissions 0400 or r--------.</p>
+<p>The executable requires following configuration items to be present in the <tt>conf/container-executor.cfg</tt> file. The items should be mentioned as simple key=value pairs, one per-line:</p>
+<table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Parameter</th><th align="left">Value</th><th align="left">Notes</th></tr><tr class="b"><td align="left"><tt>yarn.nodemanager.linux-container-executor.group</tt></td><td align="left"><em>hadoop</em></td><td align="left">Unix group of the NodeManager. The group owner of the <em>container-executor</em> binary should be this group. Should be same as the value with which the NodeManager is configured. This configuration is required for validating the secure access of the <em>container-executor</em> binary.</td></tr><tr class="a"><td align="left"><tt>banned.users</tt></td><td align="left">hfds,yarn,mapred,bin</td><td align="left">Banned users.</td></tr><tr class="b"><td align="left"><tt>allowed.system.users</tt></td><td align="left">foo,bar</td><td align="left">Allowed system users.</td></tr><tr class="a"><td align="left"><tt>min.user.id</tt></td><td align="left">1000</td><td align="left">Prevent other super-users.</td></tr></tbody></table>
+
+<pre><code>To re-cap, here are the local file-sysytem permissions required for the various paths related to the &lt;tt&gt;LinuxContainerExecutor&lt;/tt&gt;:
+</code></pre><table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Filesystem</th><th align="left">Path</th><th align="left">User:Group</th><th align="left">Permissions</th></tr><tr class="b"><td align="left">local</td><td align="left">container-executor</td><td align="left">root:hadoop</td><td align="left">--Sr-s---</td></tr><tr class="a"><td align="left">local</td><td align="left"><tt>conf/container-executor.cfg</tt></td><td align="left">root:hadoop</td><td align="left">r--------</td></tr><tr class="b"><td align="left">local</td><td align="left"><tt>yarn.nodemanager.local-dirs</tt></td><td align="left">yarn:hadoop</td><td align="left">drwxr-xr-x</td></tr><tr class="a"><td align="left">local</td><td align="left"><tt>yarn.nodemanager.log-dirs</tt></td><td align="left">yarn:hadoop</td><td align="left">drwxr-xr-x</td></tr></tbody></table>
+
+<pre><code>        *   Configurations for ResourceManager:&lt;table border=&quot;1&quot; class=&quot;bodyTable&quot;&gt;&lt;tbody&gt;&lt;tr class=&quot;a&quot;&gt;&lt;th align=&quot;left&quot;&gt;Parameter&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Value&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Notes&lt;/th&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;yarn.resourcemanager.keytab&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_/etc/security/keytab/rm.service.keytab_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos keytab file for the ResourceManager.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;a&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;yarn.resourcemanager.principal&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;rm/_HOST@REALM.TLD&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos principal name for the ResourceManager.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+*   Configurations for NodeManager:&lt;table border=&quot;1&quot; class=&quot;bodyTable&quot;&gt;&lt;tbody&gt;&lt;tr class=&quot;a&quot;&gt;&lt;th align=&quot;left&quot;&gt;Parameter&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Value&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Notes&lt;/th&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;yarn.nodemanager.keytab&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_/etc/security/keytab/nm.service.keytab_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos keytab file for the NodeManager.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;a&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;yarn.nodemanager.principal&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;nm/_HOST@REALM.TLD&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos principal name for the NodeManager.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;yarn.nodemanager.container-executor.class&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Use LinuxContainerExecutor.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;a&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;yarn.nodemanager.linux-container-executor.group&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_hadoop_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Unix group of the NodeManager.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+</code></pre><ul>
+<li><tt>conf/mapred-site.xml</tt>
+
+<pre><code>    *   Configurations for MapReduce JobHistory Server:&lt;table border=&quot;1&quot; class=&quot;bodyTable&quot;&gt;&lt;tbody&gt;&lt;tr class=&quot;a&quot;&gt;&lt;th align=&quot;left&quot;&gt;Parameter&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Value&lt;/th&gt;&lt;th align=&quot;left&quot;&gt;Notes&lt;/th&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;mapreduce.jobhistory.address&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;MapReduce JobHistory Server _host:port_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Default port is 10020.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;a&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;mapreduce.jobhistory.keytab&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;_/etc/security/keytab/jhs.service.keytab_&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos keytab file for the MapReduce JobHistory Server.&lt;/td&gt;&lt;/tr&gt;&lt;tr class=&quot;b&quot;&gt;&lt;td align=&quot;left&quot;&gt;&lt;tt&gt;mapreduce.jobhistory.principal&lt;/tt&gt;&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;jhs/_HOST@REALM.TLD&lt;/td&gt;&lt;td align=&quot;left&quot;&gt;Kerberos principal name for the MapReduce JobHistory Server.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt; 
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p><strong><a name="Operating_the_Hadoop_Cluster2">操作Hadoop集群</a></strong></p>
+<p>Once all the necessary configuration is complete, distribute the files to the <tt>HADOOP_CONF_DIR</tt> directory on all the machines.</p>
+<p>This section also describes the various Unix users who should be starting the various components and uses the same Unix accounts and groups used previously:</p>
+<ul>
+<li><a name="Hadoop_Startup2">启动Hadoop</a></li>
+</ul>
+<p>To start a Hadoop cluster you will need to start both the HDFS and YARN cluster.</p>
+<p>Format a new distributed filesystem as <em>hdfs</em>:</p>
+<div><pre>[hdfs]$ $HADOOP_PREFIX/bin/hdfs namenode -format &lt;cluster_name&gt;</pre></div>
+
+<p>Start the HDFS with the following command, run on the designated NameNode as <em>hdfs</em>:</p>
+<div><pre>[hdfs]$ $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start namenode</pre></div>
+
+<p>Run a script to start DataNodes on all slaves as <em>root</em> with a special environment variable <tt>HADOOP<em>SECURE_DN_USER</tt> set to _hdfs</em>:</p>
+<div><pre>[root]$ HADOOP_SECURE_DN_USER=hdfs $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start datanode</pre></div>
+
+<p>Start the YARN with the following command, run on the designated ResourceManager as <em>yarn</em>:</p>
+<div><pre>[yarn]$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start resourcemanager</pre></div>
+
+<p>Run a script to start NodeManagers on all slaves as <em>yarn</em>:</p>
+<div><pre>[yarn]$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start nodemanager</pre></div>
+
+<p>Start a standalone WebAppProxy server. Run on the WebAppProxy server as <em>yarn</em>. If multiple servers are used with load balancing it should be run on each of them:</p>
+<div><pre>[yarn]$ $HADOOP_YARN_HOME/bin/yarn start proxyserver --config $HADOOP_CONF_DIR</pre></div>
+
+<p>Start the MapReduce JobHistory Server with the following command, run on the designated server as <em>mapred</em>:</p>
+<div><pre>[mapred]$ $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR</pre></div>
+
+<ul>
+<li><a name="Hadoop_Shutdown2">关闭Hadoop</a></li>
+</ul>
+<p>Stop the NameNode with the following command, run on the designated NameNode as <em>hdfs</em>:</p>
+<div><pre>[hdfs]$ $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop namenode</pre></div>
+
+<p>Run a script to stop DataNodes on all slaves as <em>root</em>:</p>
+<div><pre>[root]$ $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop datanode</pre></div>
+
+<p>Stop the ResourceManager with the following command, run on the designated ResourceManager as <em>yarn</em>:</p>
+<div><pre>[yarn]$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop resourcemanager</pre></div>
+
+<p>Run a script to stop NodeManagers on all slaves as <em>yarn</em>:</p>
+<div><pre>[yarn]$ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop nodemanager</pre></div>
+
+<p>Stop the WebAppProxy server. Run on the WebAppProxy server as <em>yarn</em>. If multiple servers are used with load balancing it should be run on each of them:</p>
+<div><pre>[yarn]$ $HADOOP_YARN_HOME/bin/yarn stop proxyserver --config $HADOOP_CONF_DIR</pre></div>
+
+<p>Stop the MapReduce JobHistory Server with the following command, run on the designated server as <em>mapred</em>:</p>
+<div><pre>[mapred]$ $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh stop historyserver --config $HADOOP_CONF_DIR</pre></div>
+
+<p><strong><a name="Web_Interfaces">web控制台</a></strong></p>
+<ul>
+<li>一旦Hadoop集群启动并且运行，可以通过web界面检查各个组件的描述信息:<table border="1" class="bodyTable"><tbody><tr class="a"><th align="left">Daemon</th><th align="left">Web Interface</th><th align="left">Notes</th></tr><tr class="b"><td align="left">NameNode</td><td align="left"><a href="http://_nn_host:port_/" target="_blank">http://_nn_host:port_/</a></td><td align="left">Default HTTP port is 50070.</td></tr><tr class="a"><td align="left">ResourceManager</td><td align="left"><a href="http://_rm_host:port_/" target="_blank">http://_rm_host:port_/</a></td><td align="left">Default HTTP port is 8088.</td></tr><tr class="b"><td align="left">MapReduce JobHistory Server</td><td align="left"><a href="http://_jhs_host:port_/" target="_blank">http://_jhs_host:port_/</a></td><td align="left">Default HTTP port is 19888.</td></tr></tbody></table>
 </li>
 </ul>
 <hr>
